@@ -1,4 +1,4 @@
-💰 Budget Management System
+## 💰 Budget Management System
 
 A budget management system designed to help users track income, expenses, and savings, developed with a strong focus on **software testing and validation** principles.
 This project demonstrates the application of **test planning, test case design, validation techniques, and defect tracking** in a real-world software system.
@@ -12,6 +12,4 @@ This project demonstrates the application of **test planning, test case design, 
 - Apply software testing & validation methodologies
 
 ## Team Members
-Nyabijek Gatdet
-Chop Peter
-Chris
+Nyabijek Gatdet, Chop Peter, Chris
