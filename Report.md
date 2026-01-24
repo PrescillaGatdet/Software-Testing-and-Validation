@@ -6,6 +6,9 @@ Nyabijek Gatdet (200479520)
 Chop Peter Kur (200497265)
 Aubin Chriss (200490675)
 
+
+## Introduction
+
 ## Project Definition
 
 Managing personal or organizational finances effectively is a challenging task due to the complexity of tracking income, expenses, savings, and financial goals. Many individuals and small organizations rely on manual methods such as spreadsheets or handwritten records, which are time-consuming, error-prone, and lack real-time insights. These traditional approaches make it difficult to monitor spending patterns, control unnecessary expenses, and make informed financial decisions.
