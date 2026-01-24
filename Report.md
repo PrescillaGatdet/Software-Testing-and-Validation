@@ -16,7 +16,7 @@ Software testing is critical for financial applications because calculation erro
 
 The following sections describe the problem definition and design requirements in Section 2, present alternative solutions and the final chosen approach in Section 3, document team collaboration and meetings in Section 4, outline the project schedule in Section 5, and conclude with a summary of achievements and recommendations for future work in Section 6.
 
-## Project Definition
+## Problem Definition
 
 Managing personal or organizational finances effectively is a challenging task due to the complexity of tracking income, expenses, savings, and financial goals. Many individuals and small organizations rely on manual methods such as spreadsheets or handwritten records, which are time-consuming, error-prone, and lack real-time insights. These traditional approaches make it difficult to monitor spending patterns, control unnecessary expenses, and make informed financial decisions.
 
