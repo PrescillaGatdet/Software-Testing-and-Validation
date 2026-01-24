@@ -12,4 +12,4 @@ This project demonstrates the application of **test planning, test case design, 
 - Apply software testing & validation methodologies
 
 ## Team Members
-Nyabijek Gatdet, Chop Peter, Chris
+Nyabijek Gatdet, Chop Peter, Aubin Chriss
