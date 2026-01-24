@@ -1,6 +1,6 @@
 ## 💰 Budget Management System
 
-A budget management system designed to help users track income, expenses, and savings, developed with a strong focus on **software testing and validation** principles.
+A budget management system designed to help users track income, expenses, savings and investments developed with a strong focus on **software testing and validation** principles.
 This project demonstrates the application of **test planning, test case design, validation techniques, and defect tracking** in a real-world software system.
 
 ## 🎯 Project Objectives
