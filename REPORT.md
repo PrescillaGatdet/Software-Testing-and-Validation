@@ -3,9 +3,9 @@
 # Budget Management System
 
 **Team Members:**
-- Team member name (UofR ID)
-- Team member name (UofR ID)
-- Team member name (UofR ID)
+- Nyabijek Gatdet (200479720)
+- Chop Peter Kur (200497265)
+- Aubin Chriss (200490675)
 
 ---
 
