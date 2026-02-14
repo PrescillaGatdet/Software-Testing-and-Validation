@@ -100,15 +100,90 @@ The following constraints must be satisfied by the Budget Management System:
 
 *[Due: Feb 13 for Solutions 1 & 2, March 27 for Final Solution]*
 
+This section describes the iterative design process followed to develop the Budget Management System. Multiple solutions were considered and evaluated based on their testability, maintainability, and ability to meet the design requirements and constraints.
+
 ### 3.1 Solution 1
 
 *Description of first solution approach and reasons for not selecting it from a testing perspective.*
+
+Monolithic Procedural Approach
+Description
+The first solution considered was a simple procedural approach where all functionality would be contained within a single Java class file. This design would use static methods for all operations including transaction recording, category management, budget calculations, and report generation. Data would be stored in simple arrays or ArrayLists as class-level static variables, and the user interface would consist of System.out.println() statements mixed directly with the business logic.
+┌─────────────────────────────────────────┐
+│           BudgetManager.java            │
+│  ┌───────────────────────────────────┐  │
+│  │  - static ArrayList transactions  │  │
+│  │  - static ArrayList categories    │  │
+│  │  - static double budget           │  │
+│  │  - main()                         │  │
+│  │  - addTransaction()               │  │
+│  │  - calculateTotal()               │  │
+│  │  - printReport()                  │  │
+│  │  - saveToFile()                   │  │
+│  │  - displayMenu()                  │  │
+│  └───────────────────────────────────┘  │
+└─────────────────────────────────────────┘
+Reasons for Not Selecting (Testing Perspective)
+This solution was rejected primarily due to significant testing limitations:
+
+Tight Coupling – Business logic, data storage, and user interface code are intermingled in the same class. This makes it impossible to test calculation logic without also triggering console output, violating the principle of separation of concerns.
+Static Method Testing Difficulty – Static methods cannot be easily mocked or overridden, making it difficult to isolate units for testing. JUnit tests would need to test the entire application flow rather than individual components.
+No Dependency Injection – With hardcoded dependencies, we cannot substitute test doubles (mocks, stubs) for components like file I/O during testing. This prevents effective unit testing of business logic in isolation.
+State Management Issues – Static variables maintain state across test executions, causing tests to interfere with each other. Each test would need extensive setup and teardown to reset the global state.
+Path Testing Complexity – With all logic in one class, the control flow graph would be extremely complex, making it difficult to identify and test all paths systematically.
+Limited Integration Testing – Since there are no separate modules, integration testing is not applicable, missing an important validation layer.
 
 ### 3.2 Solution 2
 
 *Description of improved solution and its testing attributes.*
 
+Layered Architecture (Two-Tier)
+Description
+The second solution introduced a layered architecture separating the application into two tiers: a Data Layer and an Application Layer. The Data Layer would handle all data storage and retrieval operations using dedicated classes for file management. The Application Layer would contain both the business logic and user interface components, though these would still be partially coupled.
+┌─────────────────────────────────────────────────────┐
+│                 APPLICATION LAYER                    │
+│  ┌─────────────────────────────────────────────┐    │
+│  │            BudgetApplication.java            │    │
+│  │  - TransactionService (business logic)       │    │
+│  │  - ReportService (calculations)              │    │
+│  │  - UserInterface (console I/O)               │    │
+│  │  * UI methods call service methods directly  │    │
+│  └─────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────┐
+│                    DATA LAYER                        │
+│  ┌──────────────────┐    ┌──────────────────────┐   │
+│  │ FileManager.java │    │ TransactionDAO.java  │   │
+│  │ - readFile()     │    │ - save()             │   │
+│  │ - writeFile()    │    │ - load()             │   │
+│  │ - parseCSV()     │    │ - delete()           │   │
+│  └──────────────────┘    └──────────────────────┘   │
+└─────────────────────────────────────────────────────┘
+Improvements Over Solution 1
+
+Separate Data Layer allows testing of file operations independently
+Service classes can be instantiated (non-static), enabling better unit testing
+Data Access Objects (DAO) pattern allows mocking of data operations
+
+Reasons for Not Selecting (Testing Perspective)
+While this solution improved testability, it was still rejected due to the following testing concerns:
+
+View-Logic Coupling – The user interface code remains coupled with business logic in the Application Layer. Testing business rules still requires dealing with console I/O, complicating automated testing.
+Incomplete Separation – Without a dedicated Controller layer, the flow of data between user input and business logic is not clearly defined. This makes it difficult to apply state transition testing effectively.
+Limited Mock Injection – While the Data Layer can be mocked, the tight coupling in the Application Layer means we cannot easily inject mock services for testing the UI flow without triggering actual business logic.
+Decision Table Testing Challenges – User input handling and business rule processing are combined, making it difficult to create clean decision tables that map inputs to outputs without considering UI state.
+Integration Test Gaps – The two-tier structure provides only one integration boundary (Application-to-Data). A three-tier MVC architecture would provide more integration points, allowing more thorough integration testing.
+Does Not Meet Constraint C8 – This solution does not comply with the MVC Architecture Compliance constraint, which requires strict separation with no direct coupling between View and Model components.
+
 ### 3.3 Final Solution
+The final solution will implement a complete Model-View-Controller (MVC) architecture that addresses all the testing limitations identified in Solutions 1 and 2. This design will enable:
+
+Independent unit testing of Model, View, and Controller components
+Easy mock injection for isolated testing
+Clear integration boundaries for integration testing
+Proper separation supporting all validation testing techniques (boundary value, equivalence class, decision table, state transition, and use case testing)
 
 #### 3.3.1 Components
 
