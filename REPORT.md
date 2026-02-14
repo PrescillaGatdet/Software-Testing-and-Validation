@@ -109,20 +109,7 @@ This section describes the iterative design process followed to develop the Budg
 Monolithic Procedural Approach
 Description
 The first solution considered was a simple procedural approach where all functionality would be contained within a single Java class file. This design would use static methods for all operations including transaction recording, category management, budget calculations, and report generation. Data would be stored in simple arrays or ArrayLists as class-level static variables, and the user interface would consist of System.out.println() statements mixed directly with the business logic.
-┌─────────────────────────────────────────┐
-│           BudgetManager.java            │
-│  ┌───────────────────────────────────┐  │
-│  │  - static ArrayList transactions  │  │
-│  │  - static ArrayList categories    │  │
-│  │  - static double budget           │  │
-│  │  - main()                         │  │
-│  │  - addTransaction()               │  │
-│  │  - calculateTotal()               │  │
-│  │  - printReport()                  │  │
-│  │  - saveToFile()                   │  │
-│  │  - displayMenu()                  │  │
-│  └───────────────────────────────────┘  │
-└─────────────────────────────────────────┘
+The single class (BudgetManager.java) would contain all variables (transactions, categories, budget amounts) and all methods (main, addTransaction, calculateTotal, printReport, saveToFile, displayMenu) in one place with no separation between components.
 Reasons for Not Selecting (Testing Perspective)
 This solution was rejected primarily due to significant testing limitations:
 
@@ -132,35 +119,15 @@ No Dependency Injection – With hardcoded dependencies, we cannot substitute te
 State Management Issues – Static variables maintain state across test executions, causing tests to interfere with each other. Each test would need extensive setup and teardown to reset the global state.
 Path Testing Complexity – With all logic in one class, the control flow graph would be extremely complex, making it difficult to identify and test all paths systematically.
 Limited Integration Testing – Since there are no separate modules, integration testing is not applicable, missing an important validation layer.
-
 ### 3.2 Solution 2
 
 *Description of improved solution and its testing attributes.*
 
 Layered Architecture (Two-Tier)
 Description
-The second solution introduced a layered architecture separating the application into two tiers: a Data Layer and an Application Layer. The Data Layer would handle all data storage and retrieval operations using dedicated classes for file management. The Application Layer would contain both the business logic and user interface components, though these would still be partially coupled.
-┌─────────────────────────────────────────────────────┐
-│                 APPLICATION LAYER                    │
-│  ┌─────────────────────────────────────────────┐    │
-│  │            BudgetApplication.java            │    │
-│  │  - TransactionService (business logic)       │    │
-│  │  - ReportService (calculations)              │    │
-│  │  - UserInterface (console I/O)               │    │
-│  │  * UI methods call service methods directly  │    │
-│  └─────────────────────────────────────────────┘    │
-└─────────────────────────────────────────────────────┘
-                         │
-                         ▼
-┌─────────────────────────────────────────────────────┐
-│                    DATA LAYER                        │
-│  ┌──────────────────┐    ┌──────────────────────┐   │
-│  │ FileManager.java │    │ TransactionDAO.java  │   │
-│  │ - readFile()     │    │ - save()             │   │
-│  │ - writeFile()    │    │ - load()             │   │
-│  │ - parseCSV()     │    │ - delete()           │   │
-│  └──────────────────┘    └──────────────────────┘   │
-└─────────────────────────────────────────────────────┘
+The second solution introduced a layered architecture separating the application into two tiers: a Data Layer and an Application Layer.
+The Data Layer would handle all data storage and retrieval operations using dedicated classes for file management, including FileManager.java (for reading, writing, and parsing CSV files) and TransactionDAO.java (for save, load, and delete operations).
+The Application Layer would contain BudgetApplication.java with TransactionService for business logic, ReportService for calculations, and UserInterface for console I/O. However, the UI methods would still call service methods directly, keeping them partially coupled.
 Improvements Over Solution 1
 
 Separate Data Layer allows testing of file operations independently
