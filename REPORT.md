@@ -135,22 +135,32 @@ Layered Architecture (Two-Tier)
 Description
 
 The second solution introduced a layered architecture separating the application into two tiers: a Data Layer and an Application Layer.
+
 The Data Layer would handle all data storage and retrieval operations using dedicated classes for file management, including FileManager.java (for reading, writing, and parsing CSV files) and TransactionDAO.java (for save, load, and delete operations).
+
 The Application Layer would contain BudgetApplication.java with TransactionService for business logic, ReportService for calculations, and UserInterface for console I/O. However, the UI methods would still call service methods directly, keeping them partially coupled.
+
 Improvements Over Solution 1
 
 Separate Data Layer allows testing of file operations independently
+
 Service classes can be instantiated (non-static), enabling better unit testing
+
 Data Access Objects (DAO) pattern allows mocking of data operations
 
 Reasons for Not Selecting (Testing Perspective)
 While this solution improved testability, it was still rejected due to the following testing concerns:
 
 View-Logic Coupling – The user interface code remains coupled with business logic in the Application Layer. Testing business rules still requires dealing with console I/O, complicating automated testing.
+
 Incomplete Separation – Without a dedicated Controller layer, the flow of data between user input and business logic is not clearly defined. This makes it difficult to apply state transition testing effectively.
+
 Limited Mock Injection – While the Data Layer can be mocked, the tight coupling in the Application Layer means we cannot easily inject mock services for testing the UI flow without triggering actual business logic.
+
 Decision Table Testing Challenges – User input handling and business rule processing are combined, making it difficult to create clean decision tables that map inputs to outputs without considering UI state.
+
 Integration Test Gaps – The two-tier structure provides only one integration boundary (Application-to-Data). A three-tier MVC architecture would provide more integration points, allowing more thorough integration testing.
+
 Does Not Meet Constraint C8 – This solution does not comply with the MVC Architecture Compliance constraint, which requires strict separation with no direct coupling between View and Model components.
 
 ### 3.3 Final Solution
