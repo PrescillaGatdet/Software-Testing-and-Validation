@@ -107,24 +107,33 @@ This section describes the iterative design process followed to develop the Budg
 *Description of first solution approach and reasons for not selecting it from a testing perspective.*
 
 Monolithic Procedural Approach
+
 Description
+
 The first solution considered was a simple procedural approach where all functionality would be contained within a single Java class file. This design would use static methods for all operations including transaction recording, category management, budget calculations, and report generation. Data would be stored in simple arrays or ArrayLists as class-level static variables, and the user interface would consist of System.out.println() statements mixed directly with the business logic.
 The single class (BudgetManager.java) would contain all variables (transactions, categories, budget amounts) and all methods (main, addTransaction, calculateTotal, printReport, saveToFile, displayMenu) in one place with no separation between components.
 Reasons for Not Selecting (Testing Perspective)
 This solution was rejected primarily due to significant testing limitations:
 
 Tight Coupling – Business logic, data storage, and user interface code are intermingled in the same class. This makes it impossible to test calculation logic without also triggering console output, violating the principle of separation of concerns.
+
 Static Method Testing Difficulty – Static methods cannot be easily mocked or overridden, making it difficult to isolate units for testing. JUnit tests would need to test the entire application flow rather than individual components.
+
 No Dependency Injection – With hardcoded dependencies, we cannot substitute test doubles (mocks, stubs) for components like file I/O during testing. This prevents effective unit testing of business logic in isolation.
+
 State Management Issues – Static variables maintain state across test executions, causing tests to interfere with each other. Each test would need extensive setup and teardown to reset the global state.
+
 Path Testing Complexity – With all logic in one class, the control flow graph would be extremely complex, making it difficult to identify and test all paths systematically.
+
 Limited Integration Testing – Since there are no separate modules, integration testing is not applicable, missing an important validation layer.
 ### 3.2 Solution 2
 
 *Description of improved solution and its testing attributes.*
 
 Layered Architecture (Two-Tier)
+
 Description
+
 The second solution introduced a layered architecture separating the application into two tiers: a Data Layer and an Application Layer.
 The Data Layer would handle all data storage and retrieval operations using dedicated classes for file management, including FileManager.java (for reading, writing, and parsing CSV files) and TransactionDAO.java (for save, load, and delete operations).
 The Application Layer would contain BudgetApplication.java with TransactionService for business logic, ReportService for calculations, and UserInterface for console I/O. However, the UI methods would still call service methods directly, keeping them partially coupled.
