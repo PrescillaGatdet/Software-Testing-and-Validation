@@ -16,13 +16,13 @@
 | Stage 2 | DAO Layer (FileManager, TransactionDAO, BudgetDAO) | ✅ DONE | 38 tests |
 | Stage 3 | Controller Layer (business logic + Mockito unit tests) | ✅ DONE | 65 tests |
 | Stage 4 | View Layer (ConsoleView, TransactionView, ReportView) + Main.java | ✅ DONE | tested via Stage 3 |
-| Stage 5 | Structural Testing (path testing + data flow testing) | ⏳ TODO | 0 tests |
-| Stage 6 | Integration Testing (real file I/O across layers) | ⏳ TODO | 0 tests |
+| Stage 5 | Structural Testing (path testing + data flow testing) | ✅ DONE | 33 tests |
+| Stage 6 | Integration Testing (real file I/O across layers) | ✅ DONE | 14 tests |
 | Stage 7 | Validation Testing (all 5 techniques) | ⏳ TODO | 0 tests |
 | Stage 8 | Documentation (REPORT.md §3.3 + TESTING.md) | ⏳ TODO | — |
 | Stage 9 | Coverage ≥ 80%, comments, final commit | ⏳ TODO | — |
 
-**Total tests passing right now: 171 / 171 — BUILD SUCCESS**
+**Total tests passing right now: 218 / 218 — BUILD SUCCESS**
 
 ---
 
@@ -787,9 +787,9 @@ class PathTestingTest {
 
 | Technique | Required | Status | File |
 |-----------|---------|--------|------|
-| Path testing | ✅ YES | ⏳ TODO | `structural/PathTestingTest.java` |
-| Data flow testing | ✅ YES | ⏳ TODO | `structural/DataFlowTestingTest.java` |
-| Integration testing | ✅ YES | ⏳ TODO | `integration/TransactionIntegrationTest.java`, `ReportIntegrationTest.java` |
+| Path testing | ✅ YES | ✅ DONE | `structural/PathTestingTest.java` |
+| Data flow testing | ✅ YES | ✅ DONE | `structural/DataFlowTestingTest.java` |
+| Integration testing | ✅ YES | ✅ DONE | `integration/TransactionIntegrationTest.java`, `ReportIntegrationTest.java` |
 | Boundary value testing | ✅ YES | ⏳ TODO | `validation/BoundaryValueTest.java` |
 | Equivalence class testing | ✅ YES | ⏳ TODO | `validation/EquivalenceClassTest.java` |
 | Decision table testing | ✅ YES | ⏳ TODO | `validation/DecisionTableTest.java` |
@@ -801,7 +801,7 @@ class PathTestingTest {
 
 ---
 
-## Test Count Summary (As of Stage 4 Completion)
+## Test Count Summary (As of Stage 6 Completion)
 
 | Package | Test class | Tests |
 |---------|-----------|-------|
@@ -814,9 +814,13 @@ class PathTestingTest {
 | controller | TransactionControllerTest | 24 |
 | controller | BudgetControllerTest | 27 |
 | controller | ReportControllerTest | 14 |
-| **Total** | | **171** |
+| structural | PathTestingTest | 7 |
+| structural | DataFlowTestingTest | 26 |
+| integration | TransactionIntegrationTest | 8 |
+| integration | ReportIntegrationTest | 6 |
+| **Total** | | **218** |
 
-All 171 tests pass — `mvn test` → BUILD SUCCESS.
+All 218 tests pass — `mvn test` → BUILD SUCCESS.
 
 ---
 
