@@ -18,11 +18,11 @@
 | Stage 4 | View Layer (ConsoleView, TransactionView, ReportView) + Main.java | ✅ DONE | tested via Stage 3 |
 | Stage 5 | Structural Testing (path testing + data flow testing) | ✅ DONE | 33 tests |
 | Stage 6 | Integration Testing (real file I/O across layers) | ✅ DONE | 14 tests |
-| Stage 7 | Validation Testing (all 5 techniques) | ⏳ TODO | 0 tests |
+| Stage 7 | Validation Testing (all 5 techniques) | ✅ DONE | 61 tests |
 | Stage 8 | Documentation (REPORT.md §3.3 + TESTING.md) | ⏳ TODO | — |
 | Stage 9 | Coverage ≥ 80%, comments, final commit | ⏳ TODO | — |
 
-**Total tests passing right now: 218 / 218 — BUILD SUCCESS**
+**Total tests passing right now: 279 / 279 — BUILD SUCCESS**
 
 ---
 
@@ -33,7 +33,7 @@
 | D1 — Problem Definition | REPORT.md §2.1 | Jan 23 | 10% | ✅ submitted |
 | D2 — Constraints & Requirements | REPORT.md §2.2 | Jan 30 | 10% | ✅ submitted |
 | D3 — Iterative Design (Solutions 1 & 2) | REPORT.md §3.1–3.2 | Feb 13 | 10% | ✅ submitted |
-| D4 — Final Design, Implementation & Testing | REPORT.md §3.3 | March 27 | 60% | ⏳ in progress |
+| D4 — Final Design, Implementation & Testing | REPORT.md §3.3 | March 27 | 60% | ⚠️ code done (279 tests), REPORT.md §3.3 + TESTING.md still need filling |
 | D5 — Teamwork & Communication | REPORT.md §4–5 | April 10 | 10% | ⏳ TODO |
 
 ---
@@ -102,18 +102,18 @@ Software-Testing-and-Validation/
         │   ├── TransactionControllerTest.java ← 24 tests — Mockito mocks, all methods
         │   ├── BudgetControllerTest.java      ← 27 tests — Decision Table rules 1–4
         │   └── ReportControllerTest.java      ← 14 tests — monthly/yearly/category reports
-        ├── structural/                   ← ⏳ Stage 5 — CFG paths + def-use pairs
-        │   ├── PathTestingTest.java
-        │   └── DataFlowTestingTest.java
-        ├── integration/                  ← ⏳ Stage 6 — real file I/O integration
-        │   ├── TransactionIntegrationTest.java
-        │   └── ReportIntegrationTest.java
-        └── validation/                   ← ⏳ Stage 7 — all 5 validation techniques
-            ├── BoundaryValueTest.java
-            ├── EquivalenceClassTest.java
-            ├── DecisionTableTest.java
-            ├── StateTransitionTest.java
-            └── UseCaseTest.java
+        ├── structural/                   ← ✅ Stage 5 — CFG paths + def-use pairs
+        │   ├── PathTestingTest.java      ← 10 tests: 5 basis paths (V(G)=5)
+        │   └── DataFlowTestingTest.java  ← 23 tests: all-uses criterion (12 DU pairs)
+        ├── integration/                  ← ✅ Stage 6 — real file I/O integration
+        │   ├── TransactionIntegrationTest.java ← 8 tests: persist, round-trip, filter, export
+        │   └── ReportIntegrationTest.java      ← 6 tests: reports, budget alerts
+        └── validation/                   ← ✅ Stage 7 — all 5 validation techniques
+            ├── BoundaryValueTest.java    ← 15 tests (BV-01 to BV-15)
+            ├── EquivalenceClassTest.java ← 20 tests (EC-01 to EC-20)
+            ├── DecisionTableTest.java    ←  9 tests (DT-Rule1 to DT-Mixed)
+            ├── StateTransitionTest.java  ←  9 tests (ST-Txn1-5, ST-Budget1-4)
+            └── UseCaseTest.java          ←  8 tests (UC-01 to UC-08)
 ```
 
 ---
@@ -335,17 +335,17 @@ All controller tests use **Mockito** (`@ExtendWith(MockitoExtension.class)`) —
 
 ---
 
-# REMAINING STAGES
+# STAGES 5–7 (COMPLETED)
 
 ---
 
-## STAGE 5 — Structural Testing ⏳
+## STAGE 5 — Structural Testing ✅
 
-**Rubric relevance:** Required by `project_description.md` — "Structural Testing: path testing + data flow testing". Directly contributes to the 60-point Implementation & Testing section.
+**Status:** COMPLETE — 33 tests passing (PathTestingTest: 10, DataFlowTestingTest: 23)
 
-**Target function chosen:** `TransactionController.filterByDateRange(LocalDate from, LocalDate to)`
+**Target function:** `TransactionController.filterByDateRange(LocalDate from, LocalDate to)`
 
-**Why this function:** It has a clear, documentable CFG with 5 distinct paths (null checks, from>to check, empty loop, transaction matches, transaction skipped), making it ideal for both path testing and def-use pair documentation.
+**Why this function:** Clear CFG with V(G)=5, 5 distinct basis paths, 12 documentable def-use pairs.
 
 ---
 
@@ -447,9 +447,11 @@ class PathTestingTest {
 
 ---
 
-## STAGE 6 — Integration Testing ⏳
+## STAGE 6 — Integration Testing ✅
 
-**Rubric relevance:** Required by `project_description.md` — "Integration Testing: choose a subset of units to perform integration testing." Tests that components work correctly together across layer boundaries with real file I/O (no mocks).
+**Status:** COMPLETE — 14 tests passing (TransactionIntegrationTest: 8, ReportIntegrationTest: 6)
+
+**How it was verified:** `mvn test` — all 14 integration tests pass. Uses real `@TempDir` file I/O, no mocks. Tests components working together across layer boundaries.
 
 **File location:** `src/test/java/com/budgetmanager/integration/`
 
@@ -495,7 +497,19 @@ class PathTestingTest {
 
 ---
 
-## STAGE 7 — Validation Testing ⏳
+## STAGE 7 — Validation Testing ✅
+
+**Status:** COMPLETE — 61 tests passing across all 5 required techniques.
+
+| File | Tests | Technique |
+|------|-------|-----------|
+| `BoundaryValueTest.java` | 15 | Boundary Value Testing |
+| `EquivalenceClassTest.java` | 20 | Equivalence Class Testing |
+| `DecisionTableTest.java` | 9 | Decision Table Testing |
+| `StateTransitionTest.java` | 9 | State Transition Testing |
+| `UseCaseTest.java` | 8 | Use Case Testing |
+
+**How it was verified:** `mvn test` — all 279 total tests pass. BUILD SUCCESS.
 
 **Rubric relevance:** Required by `project_description.md` — all 5 validation techniques must be demonstrated. This is the most visible testing section for the professor.
 
@@ -694,7 +708,7 @@ class PathTestingTest {
 | §3.3 | Intro: why MVC was chosen over Solutions 1 & 2; how it satisfies testability requirements; comparison table |
 | §3.3.1 | Every component listed (Transaction, Budget, Report, FileManager, TransactionDAO, BudgetDAO, TransactionController, BudgetController, ReportController, ConsoleView, TransactionView, ReportView, Main), its purpose, which testing method applies. ASCII block diagram of component relationships |
 | §3.3.2 | Map each constraint (economic/regulatory/reliability/sustainability/ethics/societal) to how the MVC design satisfies it |
-| §3.3.3 | Full test suite summary: how many tests (171+), what types, pass/fail results; link to TESTING.md |
+| §3.3.3 | Full test suite summary: 279 tests total (unit + structural + integration + validation), all passing; link to TESTING.md |
 | §3.3.4 | Limitations: console-only UI, no multi-user, no encryption, no cloud, no date-based budget reset |
 | §4.3, §4.4 | Team meeting 3 and 4 logs |
 | §5 | Gantt chart (markdown table or ASCII) |
@@ -790,18 +804,18 @@ class PathTestingTest {
 | Path testing | ✅ YES | ✅ DONE | `structural/PathTestingTest.java` |
 | Data flow testing | ✅ YES | ✅ DONE | `structural/DataFlowTestingTest.java` |
 | Integration testing | ✅ YES | ✅ DONE | `integration/TransactionIntegrationTest.java`, `ReportIntegrationTest.java` |
-| Boundary value testing | ✅ YES | ⏳ TODO | `validation/BoundaryValueTest.java` |
-| Equivalence class testing | ✅ YES | ⏳ TODO | `validation/EquivalenceClassTest.java` |
-| Decision table testing | ✅ YES | ⏳ TODO | `validation/DecisionTableTest.java` |
-| State transition testing | ✅ YES | ⏳ TODO | `validation/StateTransitionTest.java` |
-| Use case testing | ✅ YES | ⏳ TODO | `validation/UseCaseTest.java` |
+| Boundary value testing | ✅ YES | ✅ DONE | `validation/BoundaryValueTest.java` (15 tests) |
+| Equivalence class testing | ✅ YES | ✅ DONE | `validation/EquivalenceClassTest.java` (20 tests) |
+| Decision table testing | ✅ YES | ✅ DONE | `validation/DecisionTableTest.java` (9 tests) |
+| State transition testing | ✅ YES | ✅ DONE | `validation/StateTransitionTest.java` (9 tests) |
+| Use case testing | ✅ YES | ✅ DONE | `validation/UseCaseTest.java` (8 tests) |
 | Unit testing (model) | ✅ present | ✅ DONE | `model/TransactionTest.java`, `BudgetTest.java`, `ReportTest.java` |
 | Unit testing (DAO) | ✅ present | ✅ DONE | `dao/FileManagerTest.java`, `TransactionDAOTest.java`, `BudgetDAOTest.java` |
 | Unit testing (controller with mocks) | ✅ present | ✅ DONE | `controller/TransactionControllerTest.java`, `BudgetControllerTest.java`, `ReportControllerTest.java` |
 
 ---
 
-## Test Count Summary (As of Stage 6 Completion)
+## Test Count Summary (As of Stage 7 Completion)
 
 | Package | Test class | Tests |
 |---------|-----------|-------|
@@ -814,13 +828,18 @@ class PathTestingTest {
 | controller | TransactionControllerTest | 24 |
 | controller | BudgetControllerTest | 27 |
 | controller | ReportControllerTest | 14 |
-| structural | PathTestingTest | 7 |
-| structural | DataFlowTestingTest | 26 |
+| structural | PathTestingTest | 10 |
+| structural | DataFlowTestingTest | 23 |
 | integration | TransactionIntegrationTest | 8 |
 | integration | ReportIntegrationTest | 6 |
-| **Total** | | **218** |
+| validation | BoundaryValueTest | 15 |
+| validation | EquivalenceClassTest | 20 |
+| validation | DecisionTableTest | 9 |
+| validation | StateTransitionTest | 9 |
+| validation | UseCaseTest | 8 |
+| **Total** | | **279** |
 
-All 218 tests pass — `mvn test` → BUILD SUCCESS.
+All 279 tests pass — `mvn test` → BUILD SUCCESS (verified 2026-03-27).
 
 ---
 
