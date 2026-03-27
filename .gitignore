@@ -1,0 +1,72 @@
+# ============================================================
+# Budget Management System — .gitignore
+# ============================================================
+
+# ----- Maven build output -----
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# ----- Maven wrapper (if added later) -----
+.mvn/wrapper/maven-wrapper.jar
+
+# ----- Local user data (CSV files) -----
+# Constraint C2: all data is stored locally — never push financial data
+data/*.csv
+data/*.bak
+
+# ----- IDE: IntelliJ IDEA -----
+.idea/
+*.iml
+*.ipr
+*.iws
+out/
+
+# ----- IDE: Eclipse -----
+.classpath
+.project
+.settings/
+bin/
+
+# ----- IDE: VS Code -----
+.vscode/
+*.code-workspace
+
+# ----- IDE: NetBeans -----
+nbproject/
+nbbuild/
+nbdist/
+.nb-gradle/
+build/
+
+# ----- OS generated files -----
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ----- JaCoCo coverage artifacts -----
+*.exec
+jacoco.exec
+
+# ----- Log files -----
+*.log
+logs/
+
+# ----- Temp files -----
+*.tmp
+*.swp
+*.swo
+*~
+
+# ----- Security: never commit sensitive files -----
+*.env
+*.properties.local
+secrets.txt
+credentials.*
