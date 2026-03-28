@@ -1,6 +1,6 @@
 # Budget Management System
 
-A console-based personal finance app built for **ENSE 375 — Software Testing and Validation** at the University of Regina. The app lets you record income and expenses, set category budgets, generate monthly and yearly reports, and get alerts when you are getting close to or have exceeded a budget limit. Everything is saved locally to CSV files so your data persists between sessions.
+A console-based personal finance app built for **ENSE 375 : Software Testing and Validation** at the University of Regina. The app lets you record income and expenses, set category budgets, generate monthly and yearly reports, and get alerts when you are getting close to or have exceeded a budget limit. Everything is saved locally to CSV files so your data persists between sessions.
 
 The main point of this project was to build and design an optimal test suite for it. We applied ten different testing techniques across 279 test cases, all passing.
 
@@ -22,14 +22,16 @@ The main point of this project was to build and design an optimal test suite for
 
 ## Tech stack
 
-| Tool | Version | Purpose |
-|---|---|---|
-| Java (OpenJDK) | 17 | Application language |
-| Apache Maven | 3.x | Build and dependency management |
-| JUnit Jupiter | 5.10.1 | Test framework |
-| Mockito | 5.7.0 | Mocking for unit tests |
-| JaCoCo | 0.8.11 | Code coverage reporting and enforcement |
-| CSV (RFC 4180) | — | Local data persistence |
+
+| Tool           | Version | Purpose                                 |
+| -------------- | ------- | --------------------------------------- |
+| Java (OpenJDK) | 17      | Application language                    |
+| Apache Maven   | 3.x     | Build and dependency management         |
+| JUnit Jupiter  | 5.10.1  | Test framework                          |
+| Mockito        | 5.7.0   | Mocking for unit tests                  |
+| JaCoCo         | 0.8.11  | Code coverage reporting and enforcement |
+| CSV (RFC 4180) | —       | Local data persistence                  |
+
 
 ---
 
@@ -37,8 +39,7 @@ The main point of this project was to build and design an optimal test suite for
 
 We had two goals running in parallel throughout the project:
 
-1. Build a functional budget management application that handles real user workflows — recording transactions, tracking budgets, generating reports — with proper input validation and reliable file storage.
-
+1. Build a functional budget management application that handles real user workflows recording transactions, tracking budgets, generating reports with proper input validation and reliable file storage.
 2. Design a comprehensive test suite that covers the application at every level: unit tests for each layer in isolation, structural tests with control flow graphs and data flow analysis, integration tests using real file I/O, and five formal validation techniques (boundary value, equivalence class, decision table, state transition, and use case testing).
 
 The design of the architecture was driven by the testing requirements, not the other way around.
@@ -145,6 +146,7 @@ Software-Testing-and-Validation/
 │           └── UseCaseTest.java            # 8 tests  — eight end-to-end user scenarios (UC-01 to UC-08)
 │
 ├── pom.xml                            # Maven build config — dependencies, JaCoCo coverage enforcement
+├── .gitignore                         # Excludes data/*.csv, target/, and IDE files from version control
 ├── README.md                          # This file
 ├── REPORT.md                          # Full project report (design process, architecture, conclusions)
 └── TESTING.md                         # Test plan (CFG diagrams, decision tables, use cases, full test index)
@@ -159,14 +161,16 @@ Software-Testing-and-Validation/
 You need Java 17 or newer and Maven 3.x installed.
 
 **Check if you already have them:**
+
 ```bash
 java -version
 mvn -version
 ```
 
 **If not:**
-- Java 17: [https://adoptium.net](https://adoptium.net) — download the Temurin 17 LTS installer for your OS
-- Maven: [https://maven.apache.org/download.cgi](https://maven.apache.org/download.cgi) — or use your package manager (`brew install maven` on Mac, `sudo apt install maven` on Linux)
+
+- Java 17: [https://adoptium.net](https://adoptium.net) ; download the Temurin 17 LTS installer for your OS
+- Maven: [https://maven.apache.org/download.cgi](https://maven.apache.org/download.cgi)  ; or use your package manager (`brew install maven` on Mac, `sudo apt install maven` on Linux)
 
 ### Clone the repo
 
@@ -241,19 +245,21 @@ JaCoCo is configured to enforce at least 70% instruction coverage. The core busi
 
 ## Test suite overview
 
-| Category | Tests | Technique |
-|---|---|---|
-| Model unit tests | 68 | JUnit 5, TDD |
-| DAO unit tests | 38 | JUnit 5, real file I/O |
-| Controller unit tests | 65 | JUnit 5 + Mockito |
-| Structural tests | 33 | Path testing, data flow analysis |
-| Integration tests | 14 | Full stack with @TempDir |
-| Boundary value tests | 15 | Min/max/just-outside boundaries |
-| Equivalence class tests | 20 | Valid/invalid input partitions |
-| Decision table tests | 9 | Four-rule budget alert table |
-| State transition tests | 9 | Transaction and budget lifecycles |
-| Use case tests | 8 | End-to-end user scenarios |
-| **Total** | **279** | |
+
+| Category                | Tests   | Technique                         |
+| ----------------------- | ------- | --------------------------------- |
+| Model unit tests        | 68      | JUnit 5, TDD                      |
+| DAO unit tests          | 38      | JUnit 5, real file I/O            |
+| Controller unit tests   | 65      | JUnit 5 + Mockito                 |
+| Structural tests        | 33      | Path testing, data flow analysis  |
+| Integration tests       | 14      | Full stack with @TempDir          |
+| Boundary value tests    | 15      | Min/max/just-outside boundaries   |
+| Equivalence class tests | 20      | Valid/invalid input partitions    |
+| Decision table tests    | 9       | Four-rule budget alert table      |
+| State transition tests  | 9       | Transaction and budget lifecycles |
+| Use case tests          | 8       | End-to-end user scenarios         |
+| **Total**               | **279** |                                   |
+
 
 For the full test plan including CFG diagrams, data flow tables, decision tables, and use case definitions, see [TESTING.md](TESTING.md).
 
@@ -263,3 +269,4 @@ For the full test plan including CFG diagrams, data flow tables, decision tables
 
 - [REPORT.md](REPORT.md) — Full project report covering the design problem, three architecture iterations, final MVC design, team work, and conclusions.
 - [TESTING.md](TESTING.md) — Complete test plan with all technical details: control flow graph, cyclomatic complexity, def-use pairs, equivalence classes, decision table, state diagrams, and use cases.
+
