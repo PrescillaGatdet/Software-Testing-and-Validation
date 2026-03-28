@@ -612,40 +612,33 @@ Total critical path duration: 36 working days
 
 ### 6.1 Conclusion
 
-This project set out to design, implement, and thoroughly test a Budget Management System using the software testing and validation principles studied throughout ENSE 375. Looking back at the full development arc — from the first architectural decision in January to the final 279-test suite passing in March — the most significant takeaway is that testability is not an afterthought you bolt on after writing code; it is a design quality that has to be baked into the architecture from day one.
+This project built and tested a Budget Management System applying the testing methods covered in ENSE 375. The biggest lesson was that testability has to be part of the design from the start, not added at the end.
 
-The decision to use a full four-layer MVC architecture, rather than a simpler monolithic or two-tier design, was driven entirely by testing requirements. That choice paid off throughout the project: the Model layer could be developed test-first using TDD with zero mocking complexity; the DAO layer was tested against real file I/O in isolated `@TempDir` directories without contaminating any other test; and the Controller layer was exercised exhaustively with Mockito-injected mocks that eliminated all file system side effects from unit tests. Without constructor-based dependency injection, none of that separation would have been achievable.
+Using a four-layer MVC architecture made testing much easier. Each layer could be tested in isolation: models needed no mocking, DAOs were tested with real files in temporary folders, and controllers were tested with Mockito mocks that kept the file system out of unit tests entirely. This separation was only possible because of constructor-based dependency injection.
 
-The structural testing phase — targeting `TransactionController.filterByDateRange()` with a control flow graph, cyclomatic complexity analysis (V(G) = 5), five basis path tests, and twelve def-use pairs — demonstrated the value of white-box analysis for methods that have multiple interacting branches. The data flow analysis in particular caught subtle edge cases around boundary-inclusive date matching that might have been missed by pure black-box testing.
+For structural testing, we picked `TransactionController.filterByDateRange()` and built a control flow graph, calculated cyclomatic complexity (V(G) = 5), ran five basis path tests, and traced twelve def-use pairs. The data flow analysis caught edge cases in boundary date matching that black-box testing alone would likely have missed.
 
-The five formal validation techniques (Boundary Value, Equivalence Class, Decision Table, State Transition, and Use Case testing) each added a different perspective to the overall confidence in the system. The Decision Table technique was especially effective for `BudgetController`, where the four-rule alert logic mapped cleanly to a formal truth table, and where a subtle implementation detail — `isExceeded()` using strictly greater-than rather than greater-than-or-equal — was exposed and verified precisely because the technique forced us to define exact boundary conditions on paper before testing.
+The five validation techniques (Boundary Value, Equivalence Class, Decision Table, State Transition, and Use Case) each checked the system from a different angle. The Decision Table was particularly useful for the budget alert logic, where mapping the four rules to a truth table revealed a key detail: `isExceeded()` uses strictly greater-than, so spending at exactly 100% is a warning, not exceeded.
 
-By the end of the project, all 279 test cases passed, all eight design constraints (C1–C8) were satisfied, and JaCoCo confirmed ≥80% instruction coverage across the model, DAO, and controller layers. The system correctly records income and expense transactions, categorizes them, alerts the user when budget thresholds are reached, generates monthly and yearly reports, and persists all data reliably to local CSV storage with no data loss under any tested scenario. The critical path from initial project setup through final report completion totalled 36 working days across a ten-week period, finishing on schedule.
+All 279 tests passed, all eight design constraints were satisfied, and JaCoCo confirmed over 80% instruction coverage across the model, DAO, and controller layers. The project finished on schedule over ten weeks.
 
 ### 6.2 Future Work
 
-The current system is fully functional and meets all project requirements, but several limitations were identified during development that point to clear directions for future improvement:
+A few areas stand out for improvement:
 
-**Graphical or Web-Based Interface**
-The console-based interface serves its purpose but limits adoption for non-technical users. Because the MVC architecture already enforces strict separation between the View and Controller layers, adding a JavaFX desktop interface or a Spring Boot REST API with a browser-based frontend would require only new View components — the entire Controller and Model layer can be reused unchanged. This is one of the most impactful improvements with the least architectural risk.
+**Graphical interface.** The console works, but a JavaFX or web-based UI would make the system usable for non-technical users. Because the View layer is already separate in MVC, only new View code would be needed.
 
-**File-Level Encryption**
-Financial data stored as plain-text CSV is readable by anyone with filesystem access. A future version should encrypt the `data/` directory using AES-256 or integrate with the operating system's native keychain/credential store. This would bring the system into closer alignment with the security expectations users have for financial software, especially on shared machines.
+**Data encryption.** Storing financial data as plain text CSV is a risk on shared machines. Encrypting the data folder with AES-256 or using the OS keychain would be a practical improvement.
 
-**Multi-User and Multi-Device Support**
-The current design assumes a single user on a single device. Introducing user accounts with password-based authentication, and optionally syncing data to a locally hosted server or encrypted cloud bucket, would make the system practical for households with multiple members managing a shared budget. The DAO layer could be extended to target a SQLite or embedded database backend rather than CSV files without changing any Controller or Model code.
+**Multi-user support.** Right now the system is single-user. Adding accounts and optional data sync would make it useful for households. The DAO layer could switch to SQLite without changing any controller or model code.
 
-**Recurring Transaction Automation**
-Every transaction currently requires manual entry. A recurring transaction feature — where the user defines a template (amount, category, description, frequency) and the system automatically generates the transaction at the specified interval — would significantly reduce data entry burden for common scenarios like monthly rent, weekly groceries, or annual subscriptions.
+**Recurring transactions.** Monthly rent, weekly groceries, and similar fixed expenses currently need to be entered by hand every time. A template-based recurring transaction feature would reduce that burden.
 
-**Automatic Budget Period Reset**
-Budget spending currently accumulates indefinitely. A practical budgeting tool needs to reset `currentSpending` to zero at the start of each new month or year (or allow users to manually trigger a reset). This could be implemented as a scheduled background task or as a reset prompt shown when the system detects that the calendar month has changed since the last session.
+**Monthly budget reset.** Spending never resets. A real budgeting tool should reset to zero at the start of each month, either automatically or on user request.
 
-**Improved CSV Robustness**
-The current CSV persistence handles commas in descriptions (RFC 4180 quoting) but not embedded newline characters or other control characters in field values. A future iteration should replace the handwritten CSV parser with a validated library such as Apache Commons CSV, which handles the full RFC 4180 specification including multi-line fields, and would also eliminate the need for the manual quoting logic in `TransactionDAO`.
+**Better CSV handling.** The current parser handles commas but not newlines inside field values. Switching to Apache Commons CSV would cover the full CSV spec and remove the manual quoting code in `TransactionDAO`.
 
-**Additional Export Formats**
-The existing `exportToCSV` feature is a useful starting point, but users often want reports in formats they can open directly in spreadsheet applications or share as documents. Adding PDF export (via Apache PDFBox or iText) and Excel export (via Apache POI) would close this gap without touching any business logic.
+**More export formats.** Adding PDF and Excel export alongside the existing CSV option would let users share reports more easily without touching any business logic.
 
 ---
 
@@ -671,60 +664,40 @@ This appendix provides supplementary structural and behavioral diagrams for the 
 
 ### A.1 Control Flow Graph — `filterByDateRange(LocalDate from, LocalDate to)`
 
-*Fig. A.1 — Control Flow Graph for `TransactionController.filterByDateRange()`. This method was selected as the structural testing target due to its well-bounded scope and a cyclomatic complexity of V(G) = 5, derived from three decision nodes and one compound filter predicate.*
+*Fig. A.1 — Control Flow Graph for `TransactionController.filterByDateRange()`. This method was selected as the structural testing target due to its well-bounded scope and a cyclomatic complexity of V(G) = 5, derived from four predicate nodes. See TESTING.md §3.1 for the full basis path table and all 10 path test cases.*
 
 ```
-                           [ENTRY]
-                              │
-                              ▼
-                    ┌─────────────────┐
-                 N1 │  from == null?  │
-                    └─────────────────┘
-                      YES │       │ NO
-                          │       │
-                          ▼       ▼
-                     ┌────────┐  ┌──────────────────┐
-                  N2 │ throw  │  │  to == null?      │ N3
-                     │  IAE   │  └──────────────────┘
-                     └────────┘    YES │       │ NO
-                                       │       │
-                                       ▼       ▼
-                                  ┌────────┐  ┌──────────────────┐
-                               N4 │ throw  │  │ from.isAfter(to)?│ N5
-                                  │  IAE   │  └──────────────────┘
-                                  └────────┘    YES │       │ NO
-                                                     │       │
-                                                     ▼       ▼
-                                               ┌────────┐  ┌───────────────────────┐
-                                            N6 │ throw  │  │  result = dao.loadAll()│ N7
-                                               │  IAE   │  │  .stream().filter(t → │
-                                               └────────┘  │  t.date >= from AND    │
-                                                           │  t.date <= to)         │
-                                                           │  .collect(toList())    │
-                                                           └───────────────────────┘
-                                                                      │
-                                                                      ▼
-                                                                ┌──────────┐
-                                                             N8 │  return  │
-                                                                │  result  │
-                                                                └──────────┘
-                                                                      │
-                                                                   [EXIT]
+N1: ENTRY — receive (from, to)
+     │
+N2: DECISION — from == null || to == null?
+     │ TRUE ──────────────────────────────► N3: throw IllegalArgumentException
+     │ FALSE
+N4: DECISION — from.isAfter(to)?
+     │ TRUE ──────────────────────────────► N5: throw IllegalArgumentException
+     │ FALSE
+N6: result = new ArrayList<>()
+     │
+N7: DECISION — more elements in dao.loadAll()?  ◄─────────────────┐
+     │ FALSE ─────────────────────────────► N10: return result     │
+     │ TRUE                                                         │
+N8: DECISION — !d.isBefore(from) && !d.isAfter(to)?               │
+     │ FALSE ──────────────────────────────────────────────────────┘
+     │ TRUE
+N9: result.add(t) ──────────────────────────────────────────────────┘
 ```
 
-**Cyclomatic Complexity:** V(G) = 5
-- Three explicit `if` decisions (N1, N3, N5): +3
-- One compound filter predicate (`date >= from AND date <= to`): +2 (two binary conditions)
-- Base: +1 (not used in decision-count formula; formula: number of binary decisions + 1 = 4 + 1 = 5)
+**Cyclomatic Complexity:** V(G) = 4 predicate nodes + 1 = **5**
 
-**Five Independent Basis Paths:**
-| Path | Description |
-|------|-------------|
-| P1 | N1(YES) → N2: `from` is null → `IllegalArgumentException` thrown |
-| P2 | N1(NO) → N3(YES) → N4: `to` is null → `IllegalArgumentException` thrown |
-| P3 | N1(NO) → N3(NO) → N5(YES) → N6: `from` is after `to` → `IllegalArgumentException` thrown |
-| P4 | N1(NO) → N3(NO) → N5(NO) → N7 → N8: valid range, no transactions match → empty list returned |
-| P5 | N1(NO) → N3(NO) → N5(NO) → N7 → N8: valid range, transactions exist → filtered list returned |
+**Five Basis Paths:**
+| Path | Route | Trigger |
+|------|-------|---------|
+| P1 | N1→N2(T)→N3 | `from` is null → `IllegalArgumentException` |
+| P2 | N1→N2(T)→N3 | `to` is null → `IllegalArgumentException` |
+| P3 | N1→N2(F)→N4(T)→N5 | both non-null; `from` is after `to` → `IllegalArgumentException` |
+| P4 | N1→N2(F)→N4(F)→N6→N7(F)→N10 | valid range; DAO returns empty list → empty list |
+| P5 | N1→N2(F)→N4(F)→N6→N7(T)→N8(T)→N9→N7→N10 | valid range; transaction in range → included in result |
+
+*Note: P1 and P2 traverse the same structural route (N2 TRUE branch) because both null inputs are handled by a single compound `||` guard. They are listed separately to ensure both sub-conditions of the compound predicate are explicitly exercised.*
 
 ---
 

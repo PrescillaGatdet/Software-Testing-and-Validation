@@ -28,9 +28,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Use Case Testing for the Budget Management System.
  *
  * Tests complete end-to-end user scenarios from the user's perspective.
- * Each test represents a real use case that would be evaluated by the professor.
- *
- * Stage 7 of IMPLEMENTATION_PLAN.md — Validation Testing (Technique 5 of 5)
  *
  * Use Cases Tested:
  *   UC-01: Record an expense and verify budget tracking
@@ -41,9 +38,6 @@ import static org.junit.jupiter.api.Assertions.*;
  *   UC-06: Record income and check positive balance
  *   UC-07: Set budget and check near-limit WARNING
  *   UC-08: Search transactions by description
- *
- * Rubric relevance: Required by project_description.md —
- * "Validation Testing: Use case testing"
  */
 @DisplayName("Stage 7 — Use Case Tests")
 class UseCaseTest {

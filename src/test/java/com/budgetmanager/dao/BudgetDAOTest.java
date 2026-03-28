@@ -13,20 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Unit tests for BudgetDAO.
- *
- * Uses a real FileManager and a temporary file to verify CSV round-trips.
- *
- * Covers:
- *   - loadAll on missing file returns empty list
- *   - save → loadAll round-trip (limit and spending are preserved)
- *   - Saving the same category twice replaces (not duplicates) the entry
- *   - Multiple categories stored independently
- *   - findByCategory present / not-found
- *   - deleteByCategory removes the correct entry
- *   - Header row is NOT returned as a Budget
- */
 @DisplayName("BudgetDAO — Unit Tests")
 class BudgetDAOTest {
 

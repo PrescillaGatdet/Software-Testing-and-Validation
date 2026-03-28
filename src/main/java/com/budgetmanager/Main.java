@@ -24,21 +24,13 @@ import java.util.Map;
  * Entry point for the Budget Management System.
  *
  * Wires together all MVC layers:
- *   Model       — Transaction, Budget, Report (in com.budgetmanager.model)
- *   DAO (I/O)   — TransactionDAO, BudgetDAO, FileManager
- *   Controller  — TransactionController, BudgetController, ReportController
- *   View        — ConsoleView, TransactionView, ReportView
+ *   Model      — Transaction, Budget, Report
+ *   DAO        — TransactionDAO, BudgetDAO, FileManager
+ *   Controller — TransactionController, BudgetController, ReportController
+ *   View       — ConsoleView, TransactionView, ReportView
  *
- * All CSV data is stored in the local "data/" directory (Constraint C2).
- * The application runs as a console loop until the user selects "0. Exit".
- *
- * Usage:
- *   mvn package
- *   java -jar target/budget-management-system-1.0-SNAPSHOT.jar
- *
- * Constraints addressed here:
- *   C4 (Cross-Platform): uses only standard Java I/O and relative file paths.
- *   C6 (Clear Feedback): every action confirms success or prints an error.
+ * CSV data is stored in the local "data/" directory.
+ * Runs as a console loop until the user selects "0. Exit".
  */
 public class Main {
 

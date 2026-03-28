@@ -17,22 +17,6 @@ import java.util.Map;
  * Controller for generating financial summary reports.
  * Aggregates transaction data to produce monthly reports, yearly reports,
  * and per-category expense breakdowns.
- *
- * Design notes (MVC — CONTROLLER layer):
- *   - TransactionDAO is injected via constructor for testability
- *     (Mockito mock in unit tests, real DAO in integration tests).
- *   - All computed values come from raw Transaction data; no caching is used
- *     so that reports always reflect the current state of the CSV files.
- *   - Report objects are immutable (see Report model) — each generate call
- *     creates a fresh Report instance.
- *   - No console I/O — display is handled by ReportView.
- *
- * Constraints addressed:
- *   C3 (Data Integrity): month validation prevents nonsense period labels.
- *   C7 (Code Coverage): every public method is fully unit-tested via mocks.
- *   C8 (MVC): depends only on DAO and model layers; zero View dependency.
- *
- * Tested by: ReportControllerTest
  */
 public class ReportController {
 

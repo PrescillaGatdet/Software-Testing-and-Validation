@@ -19,20 +19,6 @@ import java.util.Optional;
  *   Rule 2 — Spending ≤ 80 % of limit     → no alert.
  *   Rule 3 — Spending 80–100 % of limit   → WARNING alert.
  *   Rule 4 — Spending > 100 % of limit    → EXCEEDED alert.
- *
- * Design notes (MVC — CONTROLLER layer):
- *   - BudgetDAO is injected via constructor for testability.
- *   - updateSpending has no effect when no budget limit has been set for a
- *     category — this enforces Rule 1 of the decision table and prevents
- *     phantom budget entries appearing for un-budgeted categories.
- *   - No console I/O — all output is produced by ReportView/ConsoleView.
- *
- * Constraints addressed:
- *   C3 (Data Integrity): validates inputs; rejects negative limits/amounts.
- *   C7 (Code Coverage): every public method is fully unit-tested via mocks.
- *   C8 (MVC): depends only on DAO and model layers.
- *
- * Tested by: BudgetControllerTest
  */
 public class BudgetController {
 

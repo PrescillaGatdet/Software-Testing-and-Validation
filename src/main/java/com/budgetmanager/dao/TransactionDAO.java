@@ -16,22 +16,6 @@ import java.util.Optional;
  *
  * CSV format (one row per transaction):
  *   id,amount,date,description,category,type
- *
- * Design notes (MVC — DAO layer):
- *   - FileManager is injected via constructor for testability (Mockito mocking
- *     in unit tests, real FileManager in integration tests).
- *   - The header row is always written first when creating a new file.
- *   - Descriptions that contain commas are wrapped in double-quotes to avoid
- *     splitting on the wrong delimiter.
- *   - Malformed CSV lines are silently skipped rather than crashing — this
- *     satisfies Constraint C3 (data integrity for unexpected shutdowns).
- *
- * Constraints addressed:
- *   C2 (Local Storage): reads/writes only to the local filesystem via FileManager.
- *   C3 (Data Integrity): graceful handling of malformed lines; no partial writes.
- *   C8 (MVC): no dependency on View or Controller layers.
- *
- * Tested by: TransactionDAOTest
  */
 public class TransactionDAO {
 

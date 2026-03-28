@@ -8,21 +8,6 @@ import java.util.Scanner;
 /**
  * Primary console view — handles all text-based user interaction.
  * Displays menus, prompts for input, and shows feedback messages.
- *
- * Design notes (MVC — VIEW layer):
- *   - Zero business logic: this class only reads from the user and prints
- *     to the screen.  All decisions are made by the controllers.
- *   - Scanner and PrintStream are injected so that unit tests can supply
- *     a StringReader / ByteArrayOutputStream without touching stdin/stdout.
- *   - readDouble() and readDate() loop until the user enters valid data,
- *     satisfying Constraint C6 (clear feedback on bad input).
- *
- * Constraints addressed:
- *   C6 (Keyboard Navigation & Clear Feedback): menus are numbered; every
- *       invalid input triggers an inline error message.
- *   C8 (MVC): no dependency on DAO or Controller layers.
- *
- * Tested indirectly through integration / use-case tests.
  */
 public class ConsoleView {
 
@@ -51,9 +36,6 @@ public class ConsoleView {
     // Menu display
     // -------------------------------------------------------------------------
 
-    /**
-     * Prints the main application menu to the console.
-     */
     public void showMainMenu() {
         out.println();
         out.println("========================================");
@@ -75,9 +57,6 @@ public class ConsoleView {
         out.print("Enter choice: ");
     }
 
-    /**
-     * Prints the category selection sub-menu.
-     */
     public void showCategoryMenu() {
         out.println("  Categories:");
         out.println("  1. Food");

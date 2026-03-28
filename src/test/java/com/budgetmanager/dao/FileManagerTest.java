@@ -11,22 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Unit tests for FileManager.
- *
- * All tests use a temporary directory created by JUnit so they do not touch
- * the real data/ folder or leave artefacts behind.
- *
- * Covers:
- *   - readLines from non-existent file → empty list
- *   - writeLines then readLines → round-trip equality
- *   - appendLine → lines accumulate in order
- *   - writeLines overwrites existing content
- *   - fileExists before and after file creation
- *   - deleteFile removes the file; no-op on missing file
- *   - Empty/whitespace lines are excluded from readLines output
- *   - Parent directories are created automatically on first write
- */
 @DisplayName("FileManager — Unit Tests")
 class FileManagerTest {
 

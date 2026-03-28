@@ -7,18 +7,6 @@ import java.util.UUID;
 /**
  * Represents a single financial transaction (income or expense).
  * This is the core data model for the Budget Management System.
- *
- * Design notes (MVC — MODEL layer):
- *   - Pure data class with no file I/O, no console output, no business logic.
- *   - All validation is in the constructor so objects are always in a valid state.
- *   - Equality is based on ID only, allowing two references to the same logical
- *     transaction to be considered equal regardless of field updates.
- *
- * Constraints addressed:
- *   C3 (Data Integrity): constructor rejects invalid input, preventing corrupt records.
- *   C8 (MVC): this class has zero dependency on DAO or View layers.
- *
- * Tested by: TransactionTest
  */
 public class Transaction {
 

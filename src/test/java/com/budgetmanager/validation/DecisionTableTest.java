@@ -22,8 +22,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests all combinations of conditions that drive budget alert behavior.
  * The Decision Table maps directly to BudgetController.checkAllAlerts().
  *
- * Stage 7 of IMPLEMENTATION_PLAN.md — Validation Testing (Technique 3 of 5)
- *
  * Decision Table:
  * ┌─────────────────────────────┬────────┬────────┬────────┬────────┐
  * │ Condition                   │ Rule 1 │ Rule 2 │ Rule 3 │ Rule 4 │
@@ -38,9 +36,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * └─────────────────────────────┴────────┴────────┴────────┴────────┘
  *
  * Key boundary: isExceeded() uses strictly greater (>), so 100% = WARNING, 101% = EXCEEDED
- *
- * Rubric relevance: Required by project_description.md —
- * "Validation Testing: Decision tables testing"
  */
 @DisplayName("Stage 7 — Decision Table Tests")
 class DecisionTableTest {

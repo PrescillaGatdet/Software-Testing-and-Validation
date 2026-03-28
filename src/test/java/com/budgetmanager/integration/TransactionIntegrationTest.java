@@ -21,23 +21,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * Integration tests for the Transaction management subsystem.
- *
- * Tests the full integration boundary: TransactionController ↔ TransactionDAO ↔ FileManager
- *
- * Key differences from unit tests:
- *   - Uses REAL FileManager, TransactionDAO, BudgetDAO (no mocks)
- *   - Uses @TempDir for real file I/O
- *   - Tests that data survives across multiple DAO/Controller instances (round-trip)
- *   - Verifies actual file contents where needed
- *
- * Stage 6 of IMPLEMENTATION_PLAN.md — Integration Testing
- *
- * Rubric relevance: Required by project_description.md — "Integration Testing:
- * choose a subset of units to perform integration testing."
- */
 @DisplayName("Stage 6 — Transaction Integration Tests")
 class TransactionIntegrationTest {
 

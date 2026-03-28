@@ -15,21 +15,6 @@ import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Unit tests for TransactionDAO.
- *
- * Uses a real FileManager and a temporary file (not a mock) so that the
- * CSV serialisation round-trip is verified end-to-end.
- *
- * Covers:
- *   - save → loadAll round-trip (single and multiple transactions)
- *   - Header is NOT returned as a transaction
- *   - deleteById removes the correct entry and leaves others intact
- *   - findByCategory filters correctly
- *   - findById returns present/empty Optional
- *   - Description containing a comma is preserved across save/load
- *   - loadAll on missing file returns empty list (no IOException)
- */
 @DisplayName("TransactionDAO — Unit Tests")
 class TransactionDAOTest {
 

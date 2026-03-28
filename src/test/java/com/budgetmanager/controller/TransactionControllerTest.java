@@ -23,18 +23,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
-/**
- * Unit tests for TransactionController.
- *
- * Strategy: all DAO and FileManager calls are mocked so these tests exercise
- * only the controller's own logic (validation, filtering, transformation).
- * No files are created on disk during any test.
- *
- * Coverage target: every public method, all branches, all validation paths.
- * Tested methods: addTransaction, removeTransaction, getAll,
- *                 filterByCategory, filterByDateRange, searchByDescription,
- *                 exportToCSV
- */
 @ExtendWith(MockitoExtension.class)
 class TransactionControllerTest {
 

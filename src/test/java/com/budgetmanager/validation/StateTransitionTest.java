@@ -29,8 +29,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Tests every valid state transition and verifies that invalid transitions
  * are handled correctly (either as no-ops or with appropriate errors).
  *
- * Stage 7 of IMPLEMENTATION_PLAN.md — Validation Testing (Technique 4 of 5)
- *
  * Transaction State Diagram:
  * ┌─────────────────┐                      ┌────────┐
  * │  NON-EXISTENT   │ ──addTransaction()──►│ SAVED  │
@@ -55,9 +53,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * │   NO_BUDGET     │                          │  ▼  │
  * └─────────────────┘                     updateSpending()
  *                                         (accumulates)
- *
- * Rubric relevance: Required by project_description.md —
- * "Validation Testing: State transition testing"
  */
 @DisplayName("Stage 7 — State Transition Tests")
 class StateTransitionTest {

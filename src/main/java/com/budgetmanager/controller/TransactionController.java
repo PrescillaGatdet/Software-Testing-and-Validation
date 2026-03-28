@@ -15,20 +15,6 @@ import java.util.List;
  * Controller for transaction management operations.
  * Implements all business logic related to creating, retrieving,
  * filtering, searching, and exporting transactions.
- *
- * Design notes (MVC — CONTROLLER layer):
- *   - TransactionDAO and FileManager are injected via constructor for
- *     testability (Mockito mocking in unit tests, real objects in integration).
- *   - All validation that is not already enforced by the model is handled here
- *     (e.g., null category, invalid date range).
- *   - No console I/O — this class never reads from or writes to stdout/stdin.
- *
- * Constraints addressed:
- *   C3 (Data Integrity): validates all inputs before delegating to the DAO.
- *   C7 (Code Coverage): every public method is fully unit-tested via mocks.
- *   C8 (MVC): depends only on DAO and model layers; zero View dependency.
- *
- * Tested by: TransactionControllerTest
  */
 public class TransactionController {
 

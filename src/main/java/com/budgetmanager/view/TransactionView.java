@@ -6,19 +6,7 @@ import java.io.PrintStream;
 import java.util.List;
 
 /**
- * View for displaying transaction data in a formatted, readable layout.
- * All output is text-based and suitable for a terminal/console environment.
- *
- * Design notes (MVC — VIEW layer):
- *   - Pure output: no user input, no business logic.
- *   - PrintStream is injected so the output destination can be changed
- *     (e.g., captured in tests with a ByteArrayOutputStream).
- *   - Columns are aligned using fixed-width format strings so lists
- *     are easy to scan visually (satisfies Constraint C6).
- *
- * Constraints addressed:
- *   C6 (Clear Feedback): tabular output with labelled columns.
- *   C8 (MVC): no dependency on DAO or Controller layers.
+ * Displays transaction lists and details as formatted console output.
  */
 public class TransactionView {
 

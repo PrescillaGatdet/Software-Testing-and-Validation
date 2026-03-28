@@ -25,8 +25,6 @@ import static org.junit.jupiter.api.Assertions.*;
  * Partitions inputs into valid and invalid equivalence classes,
  * then tests one representative value from each class.
  *
- * Stage 7 of IMPLEMENTATION_PLAN.md — Validation Testing (Technique 2 of 5)
- *
  * Equivalence Classes:
  *   Amount:      EC1 (valid: >=0.01), EC2 (zero), EC3 (negative)
  *   Description: EC5 (valid: 1-100 chars), EC6 (null), EC7 (whitespace), EC8 (>100)
@@ -35,9 +33,6 @@ import static org.junit.jupiter.api.Assertions.*;
  *   Date:        EC13 (valid LocalDate), EC14 (null)
  *   Keyword:     EC15 (valid string), EC16 (null), EC17 (empty/whitespace)
  *   ID:          EC18 (valid string), EC19 (null), EC20 (empty/whitespace)
- *
- * Rubric relevance: Required by project_description.md —
- * "Validation Testing: Equivalence class testing"
  */
 @DisplayName("Stage 7 — Equivalence Class Tests")
 class EquivalenceClassTest {

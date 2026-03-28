@@ -23,25 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * Integration tests for the Report and Budget alert subsystem.
- *
- * Tests the full integration boundary:
- *   ReportController ↔ TransactionDAO ↔ FileManager
- *   BudgetController ↔ BudgetDAO ↔ FileManager
- *
- * Key differences from unit tests:
- *   - Uses REAL FileManager, TransactionDAO, BudgetDAO, and Controllers (no mocks)
- *   - Uses @TempDir for real file I/O
- *   - Tests that reports correctly aggregate data from persisted transactions
- *   - Verifies budget alerts are triggered based on actual spending
- *
- * Stage 6 of IMPLEMENTATION_PLAN.md — Integration Testing
- *
- * Rubric relevance: Required by project_description.md — "Integration Testing:
- * choose a subset of units to perform integration testing."
- */
 @DisplayName("Stage 6 — Report Integration Tests")
 class ReportIntegrationTest {
 

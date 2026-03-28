@@ -3,18 +3,6 @@ package com.budgetmanager.model;
 /**
  * Represents a computed financial summary report for a given time period.
  * Holds aggregate totals for income and expenses produced by ReportController.
- *
- * Design notes (MVC — MODEL layer):
- *   - Immutable: all fields are set at construction time and have no setters.
- *   - Computed properties (balance, savings rate) are derived at call time,
- *     not stored, to avoid stale data.
- *   - ReportController creates Report instances; ReportView displays them.
- *
- * Constraints addressed:
- *   C3 (Data Integrity): constructor rejects negative totals.
- *   C8 (MVC): no dependency on DAO or View layers.
- *
- * Tested by: ReportTest
  */
 public class Report {
 

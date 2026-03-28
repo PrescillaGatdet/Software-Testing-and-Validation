@@ -14,20 +14,6 @@ import java.util.Optional;
  *
  * CSV format (one row per category budget):
  *   category,limit,currentSpending
- *
- * Design notes (MVC — DAO layer):
- *   - Only one budget entry per category is maintained (save replaces existing).
- *   - The entire file is rewritten on save/delete because budget files are
- *     small (at most 7 rows — one per Category enum value).
- *   - FileManager is injected for testability.
- *
- * Constraints addressed:
- *   C2 (Local Storage): reads/writes only to the local filesystem via FileManager.
- *   C3 (Data Integrity): save is idempotent — saving the same category twice
- *                        replaces, not duplicates, the entry.
- *   C8 (MVC): no dependency on View or Controller layers.
- *
- * Tested by: BudgetDAOTest
  */
 public class BudgetDAO {
 

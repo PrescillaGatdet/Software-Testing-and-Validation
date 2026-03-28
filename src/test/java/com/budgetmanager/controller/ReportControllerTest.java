@@ -20,17 +20,6 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-
-/**
- * Unit tests for ReportController.
- *
- * Strategy: TransactionDAO is mocked — no disk access.
- * Tests verify that income/expense aggregation, date filtering, and category
- * breakdown all work correctly for the three public report methods.
- *
- * Tested methods: generateMonthlyReport, generateYearlyReport,
- *                 generateCategoryBreakdown
- */
 @ExtendWith(MockitoExtension.class)
 class ReportControllerTest {
 

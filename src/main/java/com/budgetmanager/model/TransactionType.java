@@ -1,12 +1,6 @@
 package com.budgetmanager.model;
 
-/**
- * Enum representing the type of a financial transaction.
- * A transaction is either income (money coming in) or an expense (money going out).
- *
- * Used by: Transaction, TransactionController, ReportController
- * Tested by: TransactionTest (via Transaction constructor)
- */
+/** INCOME or EXPENSE — the two types a financial transaction can be. */
 public enum TransactionType {
     /** Money received — e.g., salary, freelance payment, investment return */
     INCOME,

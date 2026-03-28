@@ -9,19 +9,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * View for displaying financial report data and budget status.
- * Formats Report objects, budget summaries, and category breakdowns
- * into human-readable console output.
- *
- * Design notes (MVC — VIEW layer):
- *   - Pure output: no user input, no business logic.
- *   - PrintStream injection allows output capture in tests.
- *   - Visual progress bars for budget status make it easy to see at a glance
- *     how much of each budget has been consumed (satisfies Constraint C6).
- *
- * Constraints addressed:
- *   C6 (Clear Feedback): aligned labels, progress indicators, percentage display.
- *   C8 (MVC): no dependency on DAO or Controller layers.
+ * Displays financial reports, budget status, and category breakdowns
+ * as formatted console output.
  */
 public class ReportView {
 

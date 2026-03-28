@@ -10,21 +10,6 @@ import java.util.List;
 
 /**
  * Low-level utility for reading and writing text files (CSV storage).
- *
- * Design notes (MVC — DAO support layer):
- *   - Handles only raw file I/O; knows nothing about business objects.
- *   - Empty and whitespace-only lines are excluded from read results to
- *     prevent parsing errors in DAO classes.
- *   - Parent directories are created automatically on write/append to avoid
- *     checked IOException spam in callers.
- *   - This class is injected into TransactionDAO and BudgetDAO via their
- *     constructors, making it easy to swap with a mock in unit tests.
- *
- * Constraints addressed:
- *   C2 (Local Data Storage): all I/O is to the local filesystem only.
- *   C3 (Data Integrity): atomic overwrite via Files.write prevents partial writes.
- *
- * Tested by: FileManagerTest
  */
 public class FileManager {
 

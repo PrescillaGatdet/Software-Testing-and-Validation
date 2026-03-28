@@ -3,18 +3,6 @@ package com.budgetmanager.model;
 /**
  * Represents a monthly spending budget limit for a specific category.
  * Tracks how much has been spent and whether the limit has been exceeded.
- *
- * Design notes (MVC — MODEL layer):
- *   - Pure data class: no file I/O, no console output.
- *   - Alert thresholds are defined as constants for testability.
- *   - currentSpending is updated by BudgetController whenever a new expense
- *     transaction is recorded in the corresponding category.
- *
- * Constraints addressed:
- *   C3 (Data Integrity): setter validation prevents negative or zero limits.
- *   C8 (MVC): no dependency on DAO or View layers.
- *
- * Tested by: BudgetTest
  */
 public class Budget {
 
@@ -95,8 +83,6 @@ public class Budget {
     /**
      * Returns the remaining budget (limit minus current spending).
      * The result can be negative if the budget has been exceeded.
-     *
-     * @return remaining budget amount
      */
     public double getRemainingBudget() {
         return limit - currentSpending;
@@ -105,8 +91,6 @@ public class Budget {
     /**
      * Returns {@code true} if current spending has strictly exceeded the limit.
      * Spending exactly equal to the limit is NOT considered exceeded.
-     *
-     * @return true if over budget
      */
     public boolean isExceeded() {
         return currentSpending > limit;
@@ -115,8 +99,6 @@ public class Budget {
     /**
      * Returns {@code true} if current spending is at or above the WARNING_THRESHOLD
      * fraction of the limit (default 80%).
-     *
-     * @return true if a warning should be shown
      */
     public boolean isNearLimit() {
         return getUsagePercentage() >= WARNING_THRESHOLD;
@@ -125,8 +107,6 @@ public class Budget {
     /**
      * Returns the fraction of the budget that has been used (0.0 to 1.0+).
      * Returns 0.0 when the limit is zero to prevent division-by-zero.
-     *
-     * @return usage ratio
      */
     public double getUsagePercentage() {
         if (limit == 0) return 0.0;

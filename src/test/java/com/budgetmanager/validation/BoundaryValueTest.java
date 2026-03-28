@@ -30,16 +30,11 @@ import static org.junit.jupiter.api.Assertions.*;
  * For each boundary: minimum, minimum+1, nominal, maximum-1, maximum,
  * below minimum, and above maximum values are tested.
  *
- * Stage 7 of IMPLEMENTATION_PLAN.md — Validation Testing (Technique 1 of 5)
- *
  * Inputs tested:
  *   - Transaction amount: min=0.01, below=0.00, negative
  *   - Description length: min=1, max=100, below=0 (empty), above=101
  *   - Month for reports: min=1, max=12, below=0, above=13
  *   - Budget limit: min>0, below=0, negative
- *
- * Rubric relevance: Required by project_description.md —
- * "Validation Testing: Boundary value testing"
  */
 @DisplayName("Stage 7 — Boundary Value Tests")
 class BoundaryValueTest {

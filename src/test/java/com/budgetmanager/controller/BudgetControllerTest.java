@@ -20,23 +20,6 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
-/**
- * Unit tests for BudgetController.
- *
- * Strategy: BudgetDAO is mocked — no files are created.
- * Tests cover all decision-table rules for alert generation, all setter
- * validation paths, and all query methods.
- *
- * Decision Table rules verified:
- *   Rule 1 (no budget set)      → no alert in checkAllAlerts
- *   Rule 2 (spending ≤ 80 %)   → no alert
- *   Rule 3 (80–100 % spending)  → WARNING alert
- *   Rule 4 (spending > 100 %)   → EXCEEDED alert
- *
- * Tested methods: setBudgetLimit, updateSpending, isOverBudget,
- *                 getRemainingBudget, getBudget, getAllBudgets, checkAllAlerts
- */
 @ExtendWith(MockitoExtension.class)
 class BudgetControllerTest {
 
