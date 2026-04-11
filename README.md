@@ -265,6 +265,14 @@ For the full test plan including CFG diagrams, data flow tables, decision tables
 
 ---
 
+## Presentation & Demo
+
+- [Slides](Budget_Management_System_Presentation%20375.pptx) — Project presentation slides (ENSE 375)
+
+[![Demo Video](https://img.youtube.com/vi/gOjIBm-3KgE/maxresdefault.jpg)](https://youtu.be/gOjIBm-3KgE)
+
+---
+
 ## Further reading
 
 - [REPORT.md](REPORT.md) — Full project report covering the design problem, three architecture iterations, final MVC design, team work, and conclusions.
